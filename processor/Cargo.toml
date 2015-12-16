@@ -13,3 +13,6 @@ rustc-serialize = "*"
 
 [dependencies.interface]
 path = "../components/interface"
+
+[dependencies.db]
+path = "../components/db"

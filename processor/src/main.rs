@@ -5,6 +5,7 @@ extern crate bodyparser;
 extern crate persistent;
 extern crate interface;
 extern crate rustc_serialize;
+extern crate db;
 
 use iron::prelude::*;
 use iron::status;
@@ -20,6 +21,7 @@ use std::fs::OpenOptions;
 use std::path::Path;
 use interface::*;
 use rustc_serialize::json;
+use db::*;
 
 pub struct Writer {
     pub file: File,
@@ -126,6 +128,15 @@ fn check_handler(req: &mut Request) -> IronResult<Response> {
 }
 
 fn main() {
+    let mut db = DbWriter::new();
+    println!("db test");
+    let conn_checker = db.conn.ping();
+    if conn_checker {
+        println!("mysql ping pong check ok");
+    } else {
+        println!("mysql ping pong failed!!!!!");
+    }
+
     // create router
     let mut router = Router::new();
     router.get("/get", check_handler); // for debug
